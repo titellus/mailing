@@ -1,0 +1,99 @@
+<div *ngIf="contacts">
+  <div class="sticky top-0 bg-white bg-opacity-90 z-50">
+    <mat-form-field appearance="standard">
+      <mat-label>Search</mat-label>
+      <input matInput
+             [ngModel]="filter"
+             (ngModelChange)="getContacts($event)"/>
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+
+    <p>{{contacts.length}} contact(s) found for '{{filter}}'.</p>
+
+    <div *ngIf="selection.selectedOptions.selected[0]?.value as c">
+      <div class="border-4 border-indigo-600 rounded-lg
+                  bg-blue-600 bg-opacity-25
+                  p-4
+                  flex flex-row
+                  relative">
+
+        <button class="absolute top-0 right-0 p-2 bolder"
+                (click)="cleanUser()">x</button>
+
+        <div class="w-1/5 pr-4">
+          <div *ngIf="c.mail && c.mail != ''">
+            <img ngxGravatar
+                 [size]="60"
+                 fallback="mp"
+                 [email]="c.mail"/>
+          </div>
+        </div>
+        <div>
+          <strong>{{c.fullName}}</strong>
+          {{c.position}}
+          <ul>
+            <li>Address:
+              <strong>
+                <div *ngIf="c.org != ''">{{c.org}}</div>
+                <div *ngIf="c.address != ''">{{c.address}}</div>
+                <div *ngIf="c.address2 != ''">{{c.address2}}</div>
+                <div *ngIf="c.address3 != ''">{{c.address3}}</div>
+                <div *ngIf="c.orgAddress != ''">{{c.orgAddress}}</div>
+                <div *ngIf="c.orgAddress2 != ''">{{c.orgAddress2}}</div>
+                <div *ngIf="c.orgAddress3 != ''">{{c.orgAddress3}}</div>
+                <div *ngIf="c.orgAddress4 != ''">{{c.orgAddress4}}</div>
+                <div *ngIf="c.orgAddress5 != ''">{{c.orgAddress5}}</div>
+                <div *ngIf="c.orgAddress6 != ''">{{c.orgAddress6}}</div>
+                {{c.countrycode}}
+              </strong>
+            </li>
+            <li *ngIf="c.website && c.website != ''">
+              Website:
+              <a href="{{c.website}}"><strong>{{c.website}}</strong></a>
+            </li>
+            <li *ngIf="c.mail && c.mail != ''">
+              Mail:
+              <a href="mailto:{{c.mail}}"><strong>{{c.mail}}</strong></a>
+            </li>
+            <li *ngIf="c.mobile && c.mobile != ''">
+              Mobile:
+              <a href="phone:{{c.mobile}}"><strong>{{c.mobile}}</strong></a>
+            </li>
+            <li *ngIf="c.phone && c.phone != ''">
+              Phone:
+              <a href="phone:{{c.phone}}"><strong>{{c.phone}}</strong></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <mat-selection-list #selection [multiple]="false" [(ngModel)]="selected">
+    <mat-list-option *ngFor="let c of contacts"
+                     [value]="c"
+                     class="">
+      <mat-list-item>
+        <div class="flex flex-row">
+          <div class="w-4 hidden md:block">
+            <img *ngIf="c.mail && c.mail != ''"
+                 ngxGravatar
+                 fallback="mp"
+                 [size]="20"
+                 [email]="c.mail"/>
+          </div>
+
+          <div class="flex-grow px-4 truncate">
+            <strong>{{c.fullName}}</strong> <span class="hidden md:block">({{c.org}})</span>
+          </div>
+
+          <div class="hidden md:block">
+            <mat-icon *ngIf="c.mail">mail</mat-icon>
+            <mat-icon *ngIf="c.skype">skype</mat-icon>
+            <mat-icon *ngIf="c.phone">phone</mat-icon>
+          </div>
+        </div>
+      </mat-list-item>
+    </mat-list-option>
+  </mat-selection-list>
+</div>
