@@ -55,6 +55,10 @@
               Mail:
               <a href="mailto:{{c.mail}}"><strong>{{c.mail}}</strong></a>
             </li>
+            <li *ngIf="c.mail2 && c.mail2 != ''">
+              Mail:
+              <a href="mailto:{{c.mail2}}"><strong>{{c.mail2}}</strong></a>
+            </li>
             <li *ngIf="c.mobile && c.mobile != ''">
               Mobile:
               <a href="phone:{{c.mobile}}"><strong>{{c.mobile}}</strong></a>
